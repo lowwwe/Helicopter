@@ -99,6 +99,10 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
+	m_heloFrameCounter += m_heloFrameIncrement;
+	m_heloFrame = static_cast<int>(m_heloFrameCounter) % 4;
+	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
+
 	if (m_exitGame)
 	{
 		m_window.close();

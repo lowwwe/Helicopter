@@ -36,9 +36,12 @@ private:
 	sf::Text m_welcomeMessage; // text used for message on screen
 	
 
-	sf::Texture	m_heloTexture;
-	sf::Sprite m_heloSprite;
-	sf::Vector2f m_heloPosition;
+	sf::Texture	m_heloTexture; // 4 frame sprite sheet of helicopter
+	sf::Sprite m_heloSprite; // sprite used to draw helo
+	sf::Vector2f m_heloPosition; // position of helicopter geometric centre
+	float m_heloFrameIncrement{ 0.25f };
+	float m_heloFrameCounter{ 0.0f };
+	int m_heloFrame{ 0 }; // current frame for animation
 	bool m_exitGame; // control exiting game
 
 };
