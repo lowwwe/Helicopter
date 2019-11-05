@@ -105,7 +105,7 @@ void Game::processKeys(sf::Event t_event)
 void Game::update(sf::Time t_deltaTime)
 {
 	animateHelicopter();
-
+	moveHelicopter();
 	if (m_exitGame)
 	{
 		m_window.close();
@@ -154,7 +154,8 @@ void Game::setupSprite()
 		std::cout << "problem loading logo" << std::endl;
 	}
 	m_heloSprite.setTexture(m_heloTexture);
-	m_heloSprite.setPosition(m_heloPosition - sf::Vector2f{ 90.0f,32.0f });
+	m_heloSprite.setOrigin(sf::Vector2f{ 90.0f,32.0f }); // used so we can flip helo
+	m_heloSprite.setPosition(m_heloPosition );
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,0,180,64 });
 }
 
@@ -165,6 +166,31 @@ void Game::animateHelicopter()
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
 }
 
+void Game::moveHelicopter()
+{
+	if (Direction::Left == m_travelDirection )
+	{
+		m_heloPosition += m_heloVelocity;
+		if (m_desiredPosition.x > m_heloPosition.x)
+		{
+			m_travelDirection = Direction::None;
+			m_heloFrameIncrement = 0.25f;
+		}		
+	}
+	if (Direction::Right == m_travelDirection)
+	{
+		m_heloPosition += m_heloVelocity;
+		if (m_desiredPosition.x < m_heloPosition.x)
+		{
+			m_travelDirection = Direction::None;
+			m_heloFrameIncrement = 0.25f;
+		}
+	}
+
+
+	m_heloSprite.setPosition(m_heloPosition);
+}
+
 void Game::processMouseButtonUp(sf::Event t_event)
 {
 	sf::Vector2f   headingVector{ 0.0f,0.0f };
@@ -172,21 +198,18 @@ void Game::processMouseButtonUp(sf::Event t_event)
 	if (m_desiredPosition.x < m_heloPosition.x)
 	{
 		m_travelDirection = Direction::Left;
+		m_heloSprite.setScale(sf::Vector2f{ -1.0f, 1.0f });
+		m_heloFrameIncrement = 0.76f;
 	}
 	else
 	{
 		m_travelDirection = Direction::Right;
+		m_heloSprite.setScale(sf::Vector2f{1.0f, 1.0f});
+		m_heloFrameIncrement = 0.76f;
 	}
 	if (m_desiredPosition.x == m_heloPosition.x)
 	{
-		if (m_desiredPosition.y < m_heloPosition.y)
-		{
-			m_travelDirection = Direction::Up;
-		}
-		else
-		{
-			m_travelDirection = Direction::Down;
-		}
+		m_travelDirection = Direction::None;
 	}
 	headingVector = m_desiredPosition - m_heloPosition;
 	headingVector = vectorUnitVector(headingVector);

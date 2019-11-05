@@ -39,7 +39,8 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
-	void animateHelicopter();
+	void animateHelicopter();	
+	void moveHelicopter();
 	void processMouseButtonUp(sf::Event t_event);
 
 	sf::RenderWindow m_window; // main SFML window
@@ -53,7 +54,7 @@ private:
 	sf::Vector2f m_desiredPosition;
 	sf::Vector2f m_heloVelocity;
 	Direction m_travelDirection{ Direction::None };
-	float m_heloSpeed{ 3.5f };
+	float m_heloSpeed{ 7.5f };
 	float m_heloFrameIncrement{ 0.25f }; // number of frames of animation we go throught per frame of game 1/60
 	float m_heloFrameCounter{ 0.0f }; // current frame number as decimal
 	int m_heloFrame{ 0 }; // current frame for animation an integer
