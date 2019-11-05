@@ -11,6 +11,15 @@
 /// </summary>
 #include <SFML/Graphics.hpp>
 
+enum class Direction
+{	None,
+	Up,
+	Down,
+	Left,
+	Right
+};
+
+
 class Game
 {
 public:
@@ -40,7 +49,11 @@ private:
 
 	sf::Texture	m_heloTexture; // 4 frame sprite sheet of helicopter
 	sf::Sprite m_heloSprite; // sprite used to draw helo
-	sf::Vector2f m_heloPosition; // position of helicopter geometric centre
+	sf::Vector2f m_heloPosition{ 200.0f,200.0f }; // position of helicopter geometric centre
+	sf::Vector2f m_desiredPosition;
+	sf::Vector2f m_heloVelocity;
+	Direction m_travelDirection{ Direction::None };
+	float m_heloSpeed{ 3.5f };
 	float m_heloFrameIncrement{ 0.25f }; // number of frames of animation we go throught per frame of game 1/60
 	float m_heloFrameCounter{ 0.0f }; // current frame number as decimal
 	int m_heloFrame{ 0 }; // current frame for animation an integer

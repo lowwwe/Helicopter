@@ -154,7 +154,7 @@ void Game::setupSprite()
 		std::cout << "problem loading logo" << std::endl;
 	}
 	m_heloSprite.setTexture(m_heloTexture);
-	m_heloSprite.setPosition(300.0f, 180.0f);
+	m_heloSprite.setPosition(m_heloPosition - sf::Vector2f{ 90.0f,32.0f });
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,0,180,64 });
 }
 
@@ -167,6 +167,28 @@ void Game::animateHelicopter()
 
 void Game::processMouseButtonUp(sf::Event t_event)
 {
-	m_heloPosition = sf::Vector2f{ static_cast<float>(t_event.mouseButton.x), static_cast<float>(t_event.mouseButton.y) };
-	m_heloSprite.setPosition(m_heloPosition - sf::Vector2f{ 90.0f, 32.0f });
+	sf::Vector2f   headingVector{ 0.0f,0.0f };
+	m_desiredPosition = sf::Vector2f{ static_cast<float>(t_event.mouseButton.x), static_cast<float>(t_event.mouseButton.y) };
+	if (m_desiredPosition.x < m_heloPosition.x)
+	{
+		m_travelDirection = Direction::Left;
+	}
+	else
+	{
+		m_travelDirection = Direction::Right;
+	}
+	if (m_desiredPosition.x == m_heloPosition.x)
+	{
+		if (m_desiredPosition.y < m_heloPosition.y)
+		{
+			m_travelDirection = Direction::Up;
+		}
+		else
+		{
+			m_travelDirection = Direction::Down;
+		}
+	}
+	headingVector = m_desiredPosition - m_heloPosition;
+	headingVector = vectorUnitVector(headingVector);
+	m_heloVelocity = headingVector * m_heloSpeed;
 }
