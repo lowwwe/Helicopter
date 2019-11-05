@@ -133,7 +133,7 @@ void Game::setupFontAndText()
 		std::cout << "problem loading arial black font" << std::endl;
 	}
 	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
+	m_welcomeMessage.setString("AirWolf");
 	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
 	m_welcomeMessage.setPosition(40.0f, 40.0f);
 	m_welcomeMessage.setCharacterSize(80U);
@@ -144,7 +144,7 @@ void Game::setupFontAndText()
 }
 
 /// <summary>
-/// load the texture and setup the sprite for the logo
+/// load the texture and setup the sprite for the helicopter
 /// </summary>
 void Game::setupSprite()
 {
@@ -159,6 +159,11 @@ void Game::setupSprite()
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,0,180,64 });
 }
 
+/// <summary>
+/// add our frame increment to the frame counter this is done 60 times per second
+/// make the frame be the interger part of the frame counter mod 4 [1,2,3,0]
+/// then set the texture rectangle to the corresponding frame of the animation
+/// </summary>
 void Game::animateHelicopter()
 {
 	m_heloFrameCounter += m_heloFrameIncrement;
@@ -166,6 +171,13 @@ void Game::animateHelicopter()
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
 }
 
+
+/// <summary>
+/// if moving left stop when the x co-ordinate is less than the desired
+/// we may never arrive at exact position.
+/// when treaveleing add the velocity to the position to get new position
+/// adjust the animation speed when we stop at new position
+/// </summary>
 void Game::moveHelicopter()
 {
 	if (Direction::Left == m_travelDirection )
@@ -191,6 +203,19 @@ void Game::moveHelicopter()
 	m_heloSprite.setPosition(m_heloPosition);
 }
 
+
+/// <summary>
+/// when mouse button is released
+/// get location of mouse click 
+/// subtract current position to get path to new location
+/// mormalise path to getunit vector velocity
+/// multiply by speed
+/// set direction based on difference in x co-ordinates
+/// if they are the same true vertical movement then set it to none
+/// adjust animation speed
+/// 
+/// </summary>
+/// <param name="t_event"></param>
 void Game::processMouseButtonUp(sf::Event t_event)
 {
 	sf::Vector2f   headingVector{ 0.0f,0.0f };

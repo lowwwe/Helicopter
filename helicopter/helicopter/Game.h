@@ -51,10 +51,10 @@ private:
 	sf::Texture	m_heloTexture; // 4 frame sprite sheet of helicopter
 	sf::Sprite m_heloSprite; // sprite used to draw helo
 	sf::Vector2f m_heloPosition{ 200.0f,200.0f }; // position of helicopter geometric centre
-	sf::Vector2f m_desiredPosition;
-	sf::Vector2f m_heloVelocity;
-	Direction m_travelDirection{ Direction::None };
-	float m_heloSpeed{ 7.5f };
+	sf::Vector2f m_desiredPosition; // mouse click and destination
+	sf::Vector2f m_heloVelocity; // velocity vecotr for moving helicopter
+	Direction m_travelDirection{ Direction::None }; // direction of travel left/right or none
+	float m_heloSpeed{ 7.5f }; // lenght of velocity vector
 	float m_heloFrameIncrement{ 0.25f }; // number of frames of animation we go throught per frame of game 1/60
 	float m_heloFrameCounter{ 0.0f }; // current frame number as decimal
 	int m_heloFrame{ 0 }; // current frame for animation an integer
