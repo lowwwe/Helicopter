@@ -30,6 +30,7 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
+	void animateHelicopter();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -39,9 +40,9 @@ private:
 	sf::Texture	m_heloTexture; // 4 frame sprite sheet of helicopter
 	sf::Sprite m_heloSprite; // sprite used to draw helo
 	sf::Vector2f m_heloPosition; // position of helicopter geometric centre
-	float m_heloFrameIncrement{ 0.25f };
-	float m_heloFrameCounter{ 0.0f };
-	int m_heloFrame{ 0 }; // current frame for animation
+	float m_heloFrameIncrement{ 0.25f }; // number of frames of animation we go throught per frame of game 1/60
+	float m_heloFrameCounter{ 0.0f }; // current frame number as decimal
+	int m_heloFrame{ 0 }; // current frame for animation an integer
 	bool m_exitGame; // control exiting game
 
 };

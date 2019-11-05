@@ -99,9 +99,7 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	m_heloFrameCounter += m_heloFrameIncrement;
-	m_heloFrame = static_cast<int>(m_heloFrameCounter) % 4;
-	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
+	animateHelicopter();
 
 	if (m_exitGame)
 	{
@@ -153,4 +151,11 @@ void Game::setupSprite()
 	m_heloSprite.setTexture(m_heloTexture);
 	m_heloSprite.setPosition(300.0f, 180.0f);
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,0,180,64 });
+}
+
+void Game::animateHelicopter()
+{
+	m_heloFrameCounter += m_heloFrameIncrement;
+	m_heloFrame = static_cast<int>(m_heloFrameCounter) % 4;
+	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
 }
