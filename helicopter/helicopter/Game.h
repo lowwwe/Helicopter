@@ -31,6 +31,7 @@ private:
 	void setupFontAndText();
 	void setupSprite();
 	void animateHelicopter();
+	void processMouseButtonUp(sf::Event t_event);
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message

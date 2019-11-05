@@ -6,6 +6,7 @@
 /// </summary>
 
 #include "Game.h"
+#include "MyVector2.h"
 #include <iostream>
 
 
@@ -76,6 +77,10 @@ void Game::processEvents()
 		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
 		{
 			processKeys(newEvent);
+		}
+		if (sf::Event::MouseButtonReleased == newEvent.type)
+		{
+			processMouseButtonUp(newEvent);
 		}
 	}
 }
@@ -158,4 +163,10 @@ void Game::animateHelicopter()
 	m_heloFrameCounter += m_heloFrameIncrement;
 	m_heloFrame = static_cast<int>(m_heloFrameCounter) % 4;
 	m_heloSprite.setTextureRect(sf::IntRect{ 0,m_heloFrame * 64,180,64 });
+}
+
+void Game::processMouseButtonUp(sf::Event t_event)
+{
+	m_heloPosition = sf::Vector2f{ static_cast<float>(t_event.mouseButton.x), static_cast<float>(t_event.mouseButton.y) };
+	m_heloSprite.setPosition(m_heloPosition - sf::Vector2f{ 90.0f, 32.0f });
 }
