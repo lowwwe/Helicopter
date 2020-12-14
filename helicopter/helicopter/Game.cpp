@@ -6,7 +6,7 @@
 /// </summary>
 
 #include "Game.h"
-#include "MyVector2.h"
+//#include "MyVector2.h"
 #include <iostream>
 
 
@@ -219,6 +219,7 @@ void Game::moveHelicopter()
 void Game::processMouseButtonUp(sf::Event t_event)
 {
 	sf::Vector2f   headingVector{ 0.0f,0.0f };
+	float vectorLenght{ 0.0f };
 	m_desiredPosition = sf::Vector2f{ static_cast<float>(t_event.mouseButton.x), static_cast<float>(t_event.mouseButton.y) };
 	if (m_desiredPosition.x < m_heloPosition.x)
 	{
@@ -237,6 +238,7 @@ void Game::processMouseButtonUp(sf::Event t_event)
 		m_travelDirection = Direction::None;
 	}
 	headingVector = m_desiredPosition - m_heloPosition;
-	headingVector = vectorUnitVector(headingVector);
+	vectorLenght = std::sqrtf(headingVector.x * headingVector.x + headingVector.y * headingVector.y);
+	headingVector = headingVector / vectorLenght;
 	m_heloVelocity = headingVector * m_heloSpeed;
 }
